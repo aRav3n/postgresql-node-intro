@@ -1,46 +1,23 @@
-const userStorage = [];
-const { body, validationResult } = require("express-validator");
 const db = require("../db/queries");
 
-const validateUser = [
-  body("userName")
-    .trim()
-    .isAlphanumeric()
-    .withMessage("Username may only contain letters and numbers")
-    .isLength({ min: 1, max: 10 })
-    .withMessage("Username must be between 1 and 10 characters"),
-];
+async function indexActionGet(req, res) {
+  const usernames = await db.getAllUsernames();
+  console.log("Usernames: ", usernames);
+  res.send("Usernames: " + usernames.map((user) => user.username).join(", "));
+}
 
-const addUser = (user) => {
-  userStorage.push(user);
+async function newActionGet(req, res) {
+  // render the form
+}
+
+async function newActionPost(req, res) {
+  const { username } = req.body;
+  await db.insertUsername(username);
+  res.redirect("/");
+}
+
+module.exports = {
+  indexActionGet,
+  newActionGet,
+  newActionPost,
 };
-
-exports.indexActionGet = (req, res) => {
-  console.log("User names will be logged here - WIP");
-};
-
-exports.newActionGet = (req, res) => {
-  res.render("new", {
-    title: "New Page",
-  });
-};
-
-exports.newActionPost = [
-  validateUser,
-  (req, res) => {
-    console.log("username to be saved: ", req.body.userName);
-    /*
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).render("new", {
-        title: "New Page",
-        errors: errors.array(),
-      });
-    }
-
-    const { userName } = req.body;
-    addUser({ userName });
-    res.redirect("/");
-    */
-  },
-];
