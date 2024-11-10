@@ -7,12 +7,14 @@ async function indexActionGet(req, res) {
 }
 
 async function newActionGet(req, res) {
-  // render the form
+  res.render("new", {
+    title: "New Page",
+  });
 }
 
 async function newActionPost(req, res) {
-  const { username } = req.body;
-  await db.insertUsername(username);
+  const { userName } = req.body;
+  await db.insertUsername(userName);
   res.redirect("/");
 }
 
