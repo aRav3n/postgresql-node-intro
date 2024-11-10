@@ -1,4 +1,5 @@
 const { Client } = require("pg");
+require("dotenv").config();
 
 const SQL = `
 CREATE TABLE IF NOT EXISTS usernames (
@@ -15,8 +16,10 @@ VALUES
 
 async function main() {
   console.log("seeding...");
+  const roleName = process.env.ROLE_NAME;
+  const rolePassword = process.env.ROLE_PASSWORD;
   const client = new Client({
-    connectionString: "postgresql://andy:littleann@localhost:5432/top_users",
+    connectionString: `postgresql://${roleName}:${rolePassword}@localhost:5432/top_users`,
   });
   await client.connect();
   await client.query(SQL);
