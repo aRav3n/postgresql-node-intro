@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/style.css">
+  <script src="./script.js"></script>
+  <title><%= title %></title>
+</head>
+<body>
+  <%- include("partials/searchBar.ejs") %>
+  <% if (locals.usernames) { %>
+    <% for( let i = 0; i < usernames.length; i++ ) { %>
+      <% const username = usernames[i].username; %>
+      <li>
+        <%= username %>
+      </li>
+    <% } %>
+  <% } %>
+</body>
+</html>

@@ -2,8 +2,11 @@ const db = require("../db/queries");
 
 async function indexActionGet(req, res) {
   const usernames = await db.getAllUsernames();
-  // console.log("Usernames: ", usernames);
-  res.send("Usernames: " + usernames.map((user) => user.username).join(", "));
+  // res.send("Usernames: " + usernames.map((user) => user.username).join(", "));
+  res.render("index", {
+    title: "Users",
+    usernames: usernames,
+  });
 }
 
 async function newActionGet(req, res) {
