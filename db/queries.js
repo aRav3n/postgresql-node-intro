@@ -10,10 +10,10 @@ async function insertUsername(username) {
 }
 
 async function searchUsers(searchString) {
-  const { rows } = await pool.query({
-    text: "SELECT username FROM usernames WHERE username LIKE ($1);",
-    values: [`%${searchString}%`],
-  });
+  const { rows } = await pool.query(
+    "SELECT username FROM usernames WHERE username LIKE ($1);",
+    [`%${searchString}%`]
+  );
   return rows;
 }
 
