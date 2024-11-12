@@ -21,8 +21,18 @@ async function newActionPost(req, res) {
   res.redirect("/");
 }
 
+async function searchActionGet(req, res) {
+  const { searchString } = req.query;
+  const searchResults = await db.searchUsers(searchString);
+  res.render("search", {
+    title: "Search Results",
+    searchResults: searchResults,
+  });
+}
+
 module.exports = {
   indexActionGet,
   newActionGet,
   newActionPost,
+  searchActionGet,
 };
